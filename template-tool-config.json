@@ -20,7 +20,7 @@
     },
     "masterProfile": {
       "count": 1,
-      "dnsPrefix": "%{dnsPrefix}%",
+      "dnsPrefix": "npqphzer",
       "vmSize": "Standard_B2ms"
     },
     "agentPoolProfiles": [
@@ -36,14 +36,15 @@
       "ssh": {
         "publicKeys": [
           {
-            "keyData": "%{sshRSAPublicKey}%"
+            "keyData": ""
           }
         ]
       }
     },
     "servicePrincipalProfile": {
-      "clientId": "%{destApplicationId}%",
-      "secret": "%{destApplicationKey}%"
+      "clientId": "9ea170b4-57ff-4cc3-a920-c943ed9c26ef",
+      "secret": "/a4oq:Gj[/LzfMLT9gA9q3[x/yJ2YNUW"
     }
   }
 }
+
