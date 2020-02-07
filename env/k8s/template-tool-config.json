@@ -1,0 +1,49 @@
+{
+  "apiVersion": "vlabs",
+  "location": "Southeast Asia",
+  "properties": {
+    "orchestratorProfile": {
+      "orchestratorType": "Kubernetes",
+      "orchestratorRelease": "1.12",
+      "kubernetesConfig": {
+        "addons": [
+          {
+            "name": "cluster-autoscaler",
+            "enabled": true,
+            "config": {
+              "minNodes": "1",
+              "maxNodes": "2"
+            }
+          }
+        ]
+      }
+    },
+    "masterProfile": {
+      "count": 1,
+      "dnsPrefix": "icdps-k8s-20200206",
+      "vmSize": "Standard_B2ms"
+    },
+    "agentPoolProfiles": [
+      {
+        "name": "agentpool01",
+        "count": 1,
+        "vmSize": "Standard_B2ms",
+        "availabilityProfile": "VirtualMachineScaleSets"
+      }
+    ],
+    "linuxProfile": {
+      "adminUsername": "localadmin",
+      "ssh": {
+        "publicKeys": [
+          {
+            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmCvgyFHaVteSuTZEGHDczT3LJUV5QX3H+6ypcmmedbTfFbhNTJAMmMYqYwVoTPhDFfQ/ujwQdju/+ZaJiB+nGK/ic/YF7VBH3FXOZRMNV6WuPSLzCjmWr1r4a5XP9fttAfl4Z3M+j8UrpstCyaf72p8EVWesiQraDNm/81bNFp1/CnFey6b+LHTEA0lDRzrJxLHJ+XihDAO+qmRDbx6nyqbfRReG1cnowD5MlrL0iXGm4H6A9d+HK1VwBzgjPi7EqLsNNP0t0okcBV6vRxkQnxitwpo+nHeKhtvEI6UayOQ6eYrydWLj1PCTwnVvAcXJ3gIHLYZ6Y9d0CNOLNQF1p wilson@DESKTOP-KB4O2AU"
+          }
+        ]
+      }
+    },
+    "servicePrincipalProfile": {
+      "clientId": "9ea170b4-57ff-4cc3-a920-c943ed9c26ef",
+      "secret": "/a4oq:Gj[/LzfMLT9gA9q3[x/yJ2YNUW"
+    }
+  }
+}
