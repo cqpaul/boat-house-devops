@@ -4,6 +4,16 @@
 
 ### 公共环境
 
+#### 服务器说明
+
+| 地址  | 说明  | 登陆方式    | 密码    |
+| ------------ | ------------ | ------------ | ------------ |
+| jenkins.devopshub.cn  | Jenkins服务器  | ssh localadmin@jenkins.devopshub.cn | 标准复杂  |
+| tools.devopshub.cn | 工具服务器，包括：SonarQube,Nexus  | ssh localadmin@jenkins.devopshub.cn | 标准复杂 |
+| k8s.devopshub.cn  | K8s服务器 | ssh localadmin@jenkins.devopshub.cn | 标准复杂 |
+
+#### 已部署工具
+
 | 地址  | 说明  | 用户名密码    |
 | ------------ | ------------ | ------------ |
 | http://jenkins.devopshub.cn  | Jenkins管理端  | admin/admin  |
