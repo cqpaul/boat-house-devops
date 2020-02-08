@@ -165,6 +165,7 @@ $toolConfigFileContent = Get-Content $toolConfigFilePath | Out-String
 #generate dnsPrefix and adminPassword and replace
 
 $randomString=New-SWRandomPassword -InputStrings abcdefghijkmnpqrstuvwxyz -PasswordLength 8 -FirstChar abcdefghijkmnpqrstuvwxyz;
+$randomString = "k8s-$randomString";
 "DNS is $randomString"
 $toolConfigFileContent=$toolConfigFileContent.Replace("%{dnsPrefix}%", $randomString);
 $ResourceGroupName = "icdps-$randomString-rg";
@@ -221,5 +222,11 @@ $K8sDeployParamsTemplate= $StagingDirectory + '\k8s\temp\azuredeploy.parameters.
 
 $LinuxDeployTemplate= $StagingDirectory + '\linux\labs-azuredeploy.json'
 $LinuxDeployParamsTemplate= $StagingDirectory + '\linux\labs-azuredeploy.parameters.json'
+$LinuxDeployParamsContent = Get-Content $LinuxDeployParamsTemplate | Out-String 
+$randomString = "linux-$randomString";
+$LinuxDeployParamsContent=$LinuxDeployParamsContent.Replace("%{adminPassword}%", $AzureUserPwd);
+$LinuxDeployParamsContent=$LinuxDeployParamsContent.Replace("%{dnsLabelPrefix}%", $randomString);
+[System.IO.File]::WriteAllLines($LinuxDeployParamsTemplate, $LinuxDeployParamsContent, $utf8Bom)
+
 az group deployment create --resource-group $ResourceGroupName --template-file $LinuxDeployTemplate --parameters $LinuxDeployParamsTemplate
 az group deployment create --resource-group $ResourceGroupName --template-file $K8sDeployTemplate --parameters $K8sDeployParamsTemplate
