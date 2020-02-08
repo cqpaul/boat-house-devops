@@ -158,7 +158,7 @@ function New-SWRandomPassword {
 #generate 8 length random password
 $StagingDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
 "staging directory = $StagingDirectory"
-$toolConfigFilePath= $StagingDirectory + '\template-tool-config.json'
+$toolConfigFilePath= $StagingDirectory + '\k8s\template-tool-config.json'
 
 $toolConfigFileContent = Get-Content $toolConfigFilePath | Out-String 
 
@@ -230,7 +230,7 @@ $LinuxDeployParamsContent=$LinuxDeployParamsContent.Replace("%{dnsLabelPrefix}%"
 [System.IO.File]::WriteAllLines($LinuxDeployParamsTemplate, $LinuxDeployParamsContent, $utf8Bom)
 
 "Start create linux vm..."
-az group deployment create --resource-group $ResourceGroupName --template-file $LinuxDeployTemplate --parameters $LinuxDeployParamsTemplate
+# az group deployment create --resource-group $ResourceGroupName --template-file $LinuxDeployTemplate --parameters $LinuxDeployParamsTemplate
 
 "Start create k8s vmss..."
-az group deployment create --resource-group $ResourceGroupName --template-file $K8sDeployTemplate --parameters $K8sDeployParamsTemplate
+# az group deployment create --resource-group $ResourceGroupName --template-file $K8sDeployTemplate --parameters $K8sDeployParamsTemplate
