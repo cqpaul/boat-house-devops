@@ -197,7 +197,7 @@ Write-Host " private key : $privateKeyContent"
 $toolConfigFileContent=$toolConfigFileContent.Replace("%{sshRSAPublicKey}%", $publicKeyContent);
 
 # Save the replace file
-"Writing configuration to: $toolConfigFileContent"
+"Writing k8s configuration to: $toolConfigFileContent"
 
 # Use UTF-8 Encoding to ensure other script can read from this file, BOM is disabled
 $utf8Bom = New-Object System.Text.UTF8Encoding $false
@@ -226,7 +226,11 @@ $LinuxDeployParamsContent = Get-Content $LinuxDeployParamsTemplate | Out-String
 $randomString = "linux-$randomString";
 $LinuxDeployParamsContent=$LinuxDeployParamsContent.Replace("%{adminPassword}%", $AzureUserPwd);
 $LinuxDeployParamsContent=$LinuxDeployParamsContent.Replace("%{dnsLabelPrefix}%", $randomString);
+"Writing linux configuration to: $LinuxDeployParamsContent"
 [System.IO.File]::WriteAllLines($LinuxDeployParamsTemplate, $LinuxDeployParamsContent, $utf8Bom)
 
+"Start create linux vm..."
 az group deployment create --resource-group $ResourceGroupName --template-file $LinuxDeployTemplate --parameters $LinuxDeployParamsTemplate
+
+"Start create k8s vmss..."
 az group deployment create --resource-group $ResourceGroupName --template-file $K8sDeployTemplate --parameters $K8sDeployParamsTemplate
