@@ -156,7 +156,8 @@ function New-SWRandomPassword {
 
 
 #generate 8 length random password
-$StagingDirectory = Get-Location
+$StagingDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
+"staging directory = $StagingDirectory"
 $toolConfigFilePath= $StagingDirectory + '\template-tool-config.json'
 
 $toolConfigFileContent = Get-Content $toolConfigFilePath | Out-String 
