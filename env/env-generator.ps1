@@ -173,8 +173,8 @@ $toolConfigFileContent=$toolConfigFileContent.Replace("%{destApplicationId}%", $
 $toolConfigFileContent=$toolConfigFileContent.Replace("%{destApplicationKey}%", $AzureSPApplicationKey);
 
 #generate ssh key and replace
-$tempFolder = $StagingDirectory + '\k8s\temp';
-$sshFolder = $tempFolder + '\k8s\ssh'
+$tempFolder = $StagingDirectory + '\temp';
+$sshFolder = $tempFolder + '\ssh'
 $existing = [System.Boolean](Test-Path $tempFolder)
 if($existing)
 {
@@ -208,18 +208,13 @@ $utf8Bom = New-Object System.Text.UTF8Encoding $false
 # Source code from https://github.com/ups216/acs-engine
 #
 "Running template specific tool ... "
-$toolCmd = $StagingDirectory + "\k8s\acs-engin\acs-engine.exe generate '$toolConfigFilePath' -o '$tempFolder'"
+$toolCmd = "acs-engin\acs-engine.exe generate '$toolConfigFilePath' -o '$tempFolder'"
 Write-Host "Running Template specific tool command:`n $toolCmd"
 Invoke-Expression $toolCmd
 
 az login -u $AzureUserName -p $AzureUserPwd
 az account set --subscription $SubscriptionName
 az group create --name $ResourceGroupName --location "Southeast Asia"
-
-$K8sDeployTemplate= $StagingDirectory + '\k8s\temp\azuredeploy.json'
-$K8sDeployParamsTemplate= $StagingDirectory + '\k8s\temp\azuredeploy.parameters.json'
-
-$LinuxDeployTemplate= $StagingDirectory + '\linux\labs-azuredeploy.json'
-$LinuxDeployParamsTemplate= $StagingDirectory + '\linux\labs-azuredeploy.parameters.json'
-az group deployment create --resource-group $ResourceGroupName --template-file $LinuxDeployTemplate --parameters $LinuxDeployParamsTemplate
-az group deployment create --resource-group $ResourceGroupName --template-file $K8sDeployTemplate --parameters $K8sDeployParamsTemplate
+$DeployTemplate= $StagingDirectory + '\temp\azuredeploy.json'
+$DeployParamsTemplate= $StagingDirectory + '\template-tool-config.json'
+az group deployment create --resource-group $ResourceGroupName --template-file $DeployTemplate --parameters $DeployParamsTemplate
