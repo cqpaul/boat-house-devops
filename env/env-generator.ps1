@@ -165,6 +165,7 @@ $toolConfigFileContent = Get-Content $toolConfigFilePath | Out-String
 #generate dnsPrefix and adminPassword and replace
 
 $randomString=New-SWRandomPassword -InputStrings abcdefghijkmnpqrstuvwxyz -PasswordLength 8 -FirstChar abcdefghijkmnpqrstuvwxyz;
+$randomString = "k8s-$randomString";
 "DNS is $randomString"
 $toolConfigFileContent=$toolConfigFileContent.Replace("%{dnsPrefix}%", $randomString);
 $ResourceGroupName = "icdps-$randomString-rg";
@@ -173,8 +174,8 @@ $toolConfigFileContent=$toolConfigFileContent.Replace("%{destApplicationId}%", $
 $toolConfigFileContent=$toolConfigFileContent.Replace("%{destApplicationKey}%", $AzureSPApplicationKey);
 
 #generate ssh key and replace
-$tempFolder = $StagingDirectory + '\temp';
-$sshFolder = $tempFolder + '\ssh'
+$tempFolder = $StagingDirectory + '\k8s\temp';
+$sshFolder = $tempFolder + '\k8s\ssh'
 $existing = [System.Boolean](Test-Path $tempFolder)
 if($existing)
 {
@@ -196,7 +197,7 @@ Write-Host " private key : $privateKeyContent"
 $toolConfigFileContent=$toolConfigFileContent.Replace("%{sshRSAPublicKey}%", $publicKeyContent);
 
 # Save the replace file
-"Writing configuration to: $toolConfigFileContent"
+"Writing k8s configuration to: $toolConfigFileContent"
 
 # Use UTF-8 Encoding to ensure other script can read from this file, BOM is disabled
 $utf8Bom = New-Object System.Text.UTF8Encoding $false
@@ -208,13 +209,28 @@ $utf8Bom = New-Object System.Text.UTF8Encoding $false
 # Source code from https://github.com/ups216/acs-engine
 #
 "Running template specific tool ... "
-$toolCmd = "acs-engin\acs-engine.exe generate '$toolConfigFilePath' -o '$tempFolder'"
+$toolCmd = $StagingDirectory + "\k8s\acs-engin\acs-engine.exe generate '$toolConfigFilePath' -o '$tempFolder'"
 Write-Host "Running Template specific tool command:`n $toolCmd"
 Invoke-Expression $toolCmd
 
 az login -u $AzureUserName -p $AzureUserPwd
 az account set --subscription $SubscriptionName
 az group create --name $ResourceGroupName --location "Southeast Asia"
-$DeployTemplate= $StagingDirectory + '\temp\azuredeploy.json'
-$DeployParamsTemplate= $StagingDirectory + '\template-tool-config.json'
-az group deployment create --resource-group $ResourceGroupName --template-file $DeployTemplate --parameters $DeployParamsTemplate
+
+$K8sDeployTemplate= $StagingDirectory + '\k8s\temp\azuredeploy.json'
+$K8sDeployParamsTemplate= $StagingDirectory + '\k8s\temp\azuredeploy.parameters.json'
+
+$LinuxDeployTemplate= $StagingDirectory + '\linux\labs-azuredeploy.json'
+$LinuxDeployParamsTemplate= $StagingDirectory + '\linux\labs-azuredeploy.parameters.json'
+$LinuxDeployParamsContent = Get-Content $LinuxDeployParamsTemplate | Out-String 
+$randomString = "linux-$randomString";
+$LinuxDeployParamsContent=$LinuxDeployParamsContent.Replace("%{adminPassword}%", $AzureUserPwd);
+$LinuxDeployParamsContent=$LinuxDeployParamsContent.Replace("%{dnsLabelPrefix}%", $randomString);
+"Writing linux configuration to: $LinuxDeployParamsContent"
+[System.IO.File]::WriteAllLines($LinuxDeployParamsTemplate, $LinuxDeployParamsContent, $utf8Bom)
+
+"Start create linux vm..."
+az group deployment create --resource-group $ResourceGroupName --template-file $LinuxDeployTemplate --parameters $LinuxDeployParamsTemplate
+
+"Start create k8s vmss..."
+az group deployment create --resource-group $ResourceGroupName --template-file $K8sDeployTemplate --parameters $K8sDeployParamsTemplate
