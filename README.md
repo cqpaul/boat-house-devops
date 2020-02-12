@@ -14,11 +14,11 @@
 
 #### 已部署工具
 
-| 地址  | 说明  | 用户名密码    |
-| ------------ | ------------ | ------------ |
-| http://jenkins.devopshub.cn  | Jenkins管理端  | admin/admin  |
-| http://tools.devopshub.cn:8081 | Nexus  | admin/admin |
-| http://tools.devopshub.cn:9000| Sonarqube  | admin/admin |
-| http://tools.devopshub.cn  | Jira  | admin/admin |
+| 地址  | 说明  | 
+| ------------ | ------------ | 
+| http://jenkins.devopshub.cn  | Jenkins管理端  |   
+| http://tools.devopshub.cn:8081 | Nexus  |  
+| http://tools.devopshub.cn:9000| Sonarqube  |  
+| http://tools.devopshub.cn  | Jira  |  
 
 ### 私有环境搭建
