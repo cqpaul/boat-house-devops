@@ -15,11 +15,11 @@
 
 #### 已部署工具
 
-| 地址  | 说明  | 密码 |
+| 地址  | 说明  | 用户名密码 |
 | ------------ | ------------ | ------------ | 
-| http://jenkins.devopshub.cn  | Jenkins管理端  |  标准复杂 | 
-| http://tools.devopshub.cn:8081 | Nexus  |  标准复杂 |   
-| http://tools.devopshub.cn:9000| Sonarqube  |  标准复杂 |   
-| http://tools.devopshub.cn  | Jira  |  标准复杂 |   
+| http://jenkins.devopshub.cn  | Jenkins管理端  |  admin/标准复杂 | 
+| http://tools.devopshub.cn:8081 | Nexus  |  admin/标准复杂 |   
+| http://tools.devopshub.cn:9000| Sonarqube  |  admin/标准复杂 |   
+| http://tools.devopshub.cn  | Jira  |  admin/标准复杂 |   
 
 ### 私有环境搭建
