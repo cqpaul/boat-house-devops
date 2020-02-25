@@ -6,3 +6,5 @@
 [Sonarqube配置指南](docs/Sonarqube配置指南.md)
 
 [快速创建Junit测试](docs/快速创建Junit测试.md)
+
+[Nexus搭建指南](docs/Nexus搭建指南.md)
