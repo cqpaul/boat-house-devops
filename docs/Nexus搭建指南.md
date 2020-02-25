@@ -33,7 +33,7 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker 
 
 ##使用
-docker login 104.215.184.71:2020 -u admin -p "admin"
+docker login {IP}:2020 -u admin -p "{Password}"
 
 
 安装nginx
