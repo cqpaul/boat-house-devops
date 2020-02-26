@@ -8,3 +8,5 @@
 [快速创建Junit测试](docs/快速创建Junit测试.md)
 
 [Nexus搭建指南](docs/Nexus搭建指南.md)
+
+[Nexus使用指南](docs/Nexus使用指南.md)
