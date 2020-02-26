@@ -1,4 +1,4 @@
-###Docker 安装
+### Docker 安装
 sudo apt-get update
 sudo apt install docker.io
 sudo usermod -a -G docker {localadmin}
@@ -11,7 +11,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo systemctl daemon-reload
 sudo systemctl restart docker 
 
-###Nexus安装
+### Nexus安装
 https://hub.docker.com/r/sonatype/nexus3/
 
 $ sudo mkdir nexus-data && chown -R 200 /nexus-data
@@ -32,7 +32,7 @@ mac客户端
 sudo systemctl daemon-reload
 sudo systemctl restart docker 
 
-##使用
+## 使用
 docker login {IP}:2020 -u admin -p "{Password}"
 
 
