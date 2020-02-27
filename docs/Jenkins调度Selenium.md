@@ -18,4 +18,4 @@
 
 ## 连接浏览器节点
 
-参考：[Selenium自动化UI测试](docs/Selenium自动化UI测试.md)
+参考：[Selenium自动化UI测试](Selenium自动化UI测试.md)
