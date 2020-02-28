@@ -12,3 +12,5 @@
 [Nexus搭建指南](docs/Nexus搭建指南.md)
 
 [Nexus使用指南](docs/Nexus使用指南.md)
+
+[Postman接口测试指南](docs/Postman接口测试指南.md)
